@@ -1,0 +1,24 @@
+<html>
+<head>
+	<title>Crawlify test</title>
+</head>
+<body>
+	<div id="app"></div>
+
+	<script src="../crawlify.js"></script>
+	<script>
+		(function(){
+			var crawlify = window.crawlify;
+			var app = document.getElementById("app");
+
+			// Do some rendering later
+			setTimeout(function() {
+				app.innerHTML = "<strong>It worked!</strong>";
+				crawlify.start();
+			}, 300);
+
+			crawlify.stop();
+		})();
+	</script>
+</body>
+</html>

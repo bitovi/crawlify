@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>Crawlify test with multiple pages</title>
+</head>
+<body>
+	<div id="app"></div>
+
+	<a href="page2.html">Go to page2</a>
+
+	<script src="../crawlify.js"></script>
+	<script>
+		(function(){
+			var crawlify = window.crawlify;
+			var app = document.getElementById("app");
+
+			var pushState = history.pushState;
+			history.pushState = function(state, title, url) {
+				if(url === "page2.html") {
+					crawlify.stop();
+					setTimeout(function() {
+						app.innerHTML = "<span>This is page 2</span>";	
+					}, 50);
+
+				}
+				pushState.apply(this, arguments);
+			};
+
+			document.querySelector('a').addEventListener("click", function(e) {
+				e.preventDefault();
+				history.pushState({}, null, "page2.html");
+			});
+
+			// Do some initial rendering if this is the first page
+			app.innerHTML = "<span>This is page 1</span>";
+			crawlify.start();
+		})();
+	</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "crawlify",
+  "version": "0.0.1",
+  "description": "Crawl things",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -R spec test/test.js"
+  },
+  "keywords": [
+    "zombie",
+    "crawl"
+  ],
+  "author": "Bitovi",
+  "license": "MIT",
+  "dependencies": {
+    "zombie": "^2.0.0-alpha31"
+  },
+  "devDependencies": {
+    "cheerio": "^0.15.0"
+  }
+}
