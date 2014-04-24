@@ -2,7 +2,23 @@
 
 Crawlify uses a pool of ([zombie](http://zombie.labnotes.org/)) browsers to create a static copy of your single-page application. Rather than waiting an arbitrary amount of time, crawlify includes a client-side component that you use within your own code.
 
+# Installation
+
+```shell
+npm install crawlify
+```
+
+```shell
+bower install crawlify
+```
+
 # Example
+
+First include `crawlify.js` in your webpage. This will place a `crawlify` object on `indow` that you can call start and stop on.
+
+```html
+<script src="crawlify.js"></script>
+```
 
 ## Client
 
