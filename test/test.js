@@ -3,6 +3,17 @@ var Crawlify = require("../lib");
 
 var cheerio = require("cheerio");
 
+describe("Calling the constructor", function() {
+	var crawl = new Crawlify({
+		workers: 3												
+	});
+
+	it("Takes a number of workers that are immediately available", function() {
+		assert.equal(crawl.pool.available.length, 3, "There should be 3 workers ready to be used");
+	});
+
+});
+
 describe("Visiting a page", function(done) {
 	var crawl, error, html;
 
