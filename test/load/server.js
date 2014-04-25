@@ -17,7 +17,7 @@ app.get("/load/:id", function(req, res) {
 
 app.get("/api/products", function(req, res) {
 	var prods = [];
-	for(var i = 0; i < 50; i++) {
+	for(var i = 0; i < 100; i++) {
 		prods.push({
 			name: "Product " + i,
 			price: Math.random() * 100

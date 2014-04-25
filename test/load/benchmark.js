@@ -1,7 +1,9 @@
 var Crawlify = require("../../lib");
-var numberOfWorkers = 10;
+var numberOfWorkers = 4;
 var crawl = new Crawlify({
-	workers: numberOfWorkers
+	reset: "/load",
+	workers: numberOfWorkers,
+	maxWorkers: numberOfWorkers
 });
 
 var numberOfRuns = 100;
@@ -31,7 +33,7 @@ function benchmark() {
 		setTimeout(function() {
 			product(id);
 		}, wait);
-		wait += 1000;
+		wait += 200;
 	};
 
 	for(var i = 0; i < numberOfRuns; i++) {
@@ -51,5 +53,20 @@ function product(id) {
 var times = [];
 function report(ms) {
 	times.push(ms);
-	console.log("Time: " + ms + " Workers: " + crawl.pool.working.length);
+	console.log("Time: " + ms + " Working: " + crawl.pool.working.length +
+							" Available: " + crawl.pool.available.length +
+							" Queued: " + crawl.pool.queue.length);
+
+	if(times.length === numberOfRuns) {
+		fin();
+	}
+}
+
+function fin() {
+	var sum = times.reduce(function(a, b) { return a + b });
+	var avg = sum / times.length;
+
+	console.log("Average:", avg);
+	/*crawl.pool.disconnect();
+	process.exit();*/
 }
