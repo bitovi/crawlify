@@ -34,6 +34,22 @@
 		}
 	};
 
+	/**
+	 * @method when
+	 * Takes a deferred object and stops until the deferred is resolved.
+	 *
+	 * @param {Deferred} deferred
+	 */
+	Crawlify.prototype.when = function(deferred) {
+		// Stop and when for the deferred to complete being starting again.
+		this.stop();
+
+		var self = this;
+		deferred.done(function() {
+			self.start();
+		});
+	};
+
 	// Register Crawlify as a global
 	var crawlify = new Crawlify();
 
