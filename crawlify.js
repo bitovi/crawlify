@@ -35,7 +35,14 @@
 	};
 
 	// Register Crawlify as a global
-	var crawlify = global.crawlify = new Crawlify();
-	crawlify.Crawlify = Crawlify;
+	var crawlify = new Crawlify();
+
+	// If there is a global crawlify object, use it as the initial options.
+	if(global.crawlify) {
+		for(var p in global.crawlify) {
+			crawlify[p] = global.crawlify[p];
+		}
+	}
+	global.crawlify = crawlify;
 
 })(this);

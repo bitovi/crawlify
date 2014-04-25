@@ -41,6 +41,13 @@ describe("Visiting a page", function(done) {
 	it("Puts the worker back in the available queue after completing", function() {
 		assert.equal(crawl.pool.available.length, 1, "There is not the correct amount of available workers");
 	});
+
+	it("Informs the client that it is crawling so that the client can intelligently load parts of the page", function() {
+		var $ = cheerio.load(html);
+		var loadedForServer = $('.for-server');
+
+		assert.equal(loadedForServer.length, 1, "Element loaded for the server is not included in the page.");
+	});
 });
 
 describe("Visiting multiple pages without reloading", function() {

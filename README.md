@@ -55,3 +55,10 @@ crawl.visit("/todos", function(error, html) {
 });
 
 ```
+
+# Development
+
+1) Clone the repo
+2) `npm install`
+3) Make sure you have [mocha](http://visionmedia.github.io/mocha/) installed
+4) `npm test`

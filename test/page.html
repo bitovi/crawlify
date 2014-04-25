@@ -17,6 +17,12 @@
 				crawlify.start();
 			}, 300);
 
+			if(crawlify.isCrawling) {
+				var div = document.createElement("div");
+				div.className = "for-server";
+				document.body.appendChild(div);
+			}
+
 			crawlify.stop();
 		})();
 	</script>
