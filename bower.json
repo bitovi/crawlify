@@ -1,0 +1,27 @@
+{
+  "name": "crawlify",
+  "main": "crawlify.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/bitovi/crawlify",
+  "authors": [
+    "Bitovi"
+  ],
+  "description": "Efficient server-side crawling of single-page applications",
+  "keywords": [
+    "crawlify",
+    "crawl",
+    "zombie"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "canjs": "2.0.7",
+    "jquery": "~2.0.0"
+  }
+}
