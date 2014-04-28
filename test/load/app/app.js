@@ -1,4 +1,12 @@
-steal("can", "./product.js", "./app.mustache", "can/route/pushstate", function(can, Product, tmpl) {
+steal("can", "./product.js", "can/route/pushstate", "can/view/stache", function(can, Product) {
+	var txt = "Online Shopping\n\n" +
+		"<ul>" +
+		"{{#each products}}" +
+  	"<li>{{name}}: {{price}}</li>" +
+		"{{/each}}" +
+		"</ul>";
+	var tmpl = can.view.stache(txt);
+
 	can.route.bindings.pushstate.root = "/load/"
 	can.route(":id");
 

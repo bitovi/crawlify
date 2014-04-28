@@ -1,12 +1,16 @@
-var Crawlify = require("../../lib");
+// Options
+
 var numberOfWorkers = 4;
+var numberOfRuns = 100;
+var waitBetweenVisits = 100;
+
+var Crawlify = require("../../lib");
 var crawl = new Crawlify({
 	reset: "/load",
 	workers: numberOfWorkers,
 	maxWorkers: numberOfWorkers
 });
 
-var numberOfRuns = 100;
 
 var baseUrl = "http://0.0.0.0:8777/";
 var url = function(path) {
@@ -33,7 +37,7 @@ function benchmark() {
 		setTimeout(function() {
 			product(id);
 		}, wait);
-		wait += 200;
+		wait += waitBetweenVisits;
 	};
 
 	for(var i = 0; i < numberOfRuns; i++) {
@@ -62,11 +66,13 @@ function report(ms) {
 	}
 }
 
+var startAll = new Date();
 function fin() {
 	var sum = times.reduce(function(a, b) { return a + b });
 	var avg = sum / times.length;
 
-	console.log("Average:", avg);
-	/*crawl.pool.disconnect();
-	process.exit();*/
+  var stopAll = new Date();
+	console.log("Average:", avg, "Total:", stopAll - startAll);
+	crawl.pool.disconnect();
+	process.exit();
 }
