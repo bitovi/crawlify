@@ -8,7 +8,8 @@ var Crawlify = require("../../lib");
 var crawl = new Crawlify({
 	reset: "/load",
 	workers: numberOfWorkers,
-	maxWorkers: numberOfWorkers
+	maxWorkers: numberOfWorkers,
+	benchmark: true
 });
 
 
@@ -46,11 +47,9 @@ function benchmark() {
 }
 
 function product(id) {
-	var st = new Date();
-	crawl.visit(url("load/" + id), function(error, html) {
+	crawl.visit(url("load/" + id), function(error, html, ms) {
 		//console.log(html);
-		var stop = new Date();
-		report(stop - st);
+		report(ms);
 	});
 }
 
