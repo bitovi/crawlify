@@ -12,13 +12,12 @@
     "test": "mocha -R spec test/test.js"
   },
   "keywords": [
-    "zombie",
+    "phantomjs",
     "crawl"
   ],
   "author": "Bitovi",
   "license": "MIT",
   "dependencies": {
-    "zombie": "^2.0.0-alpha31",
     "phantom": "^0.6.1"
   },
   "devDependencies": {
