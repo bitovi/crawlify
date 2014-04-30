@@ -30,7 +30,7 @@
 		}
 
 		if(this.counter === 0) {
-			this.complete = true;
+			this.fin();
 		}
 	};
 
@@ -48,6 +48,17 @@
 		deferred.done(function() {
 			self.start();
 		});
+	};
+
+	/**
+	 * @method fin
+	 * Singles to the server-side crawlify that this render loop is complete.
+	 */
+	Crawlify.prototype.fin = function() {
+		this.complete = true;
+		if(typeof window.callPhantom === "function") {
+			window.callPhantom();
+		}
 	};
 
 	// Register Crawlify as a global

@@ -1,30 +1,29 @@
 // Options
 
-var numberOfWorkers = 4;
-var numberOfRuns = 100;
-var waitBetweenVisits = 100;
+var numberOfWorkers = 8;
+var numberOfRuns = 1000;
+var requestsPerSecond = 78.6;
+
+var baseUrl = "http://0.0.0.0:8777/";
+function url(path) {
+	return baseUrl + path;
+}
 
 var Crawlify = require("../../lib");
 var crawl = new Crawlify({
-	reset: "/load",
+	reset: url("/load"),
 	workers: numberOfWorkers,
-	maxWorkers: numberOfWorkers,
 	benchmark: true
 });
 
 
-var baseUrl = "http://0.0.0.0:8777/";
-var url = function(path) {
-	return baseUrl + path;
-}
-
 function kickoff() {
 	var remaining = numberOfWorkers;
 	for(var i = 0; i < numberOfWorkers; i++) {
-		crawl.visit(url("load"), function() {
+		crawl.visit(url("load"), function(e, html) {
 			remaining--;
 			if(!remaining) {
-				benchmark();
+				benchmark(numberOfRuns);
 			}
 		});
 	}
@@ -32,23 +31,18 @@ function kickoff() {
 
 kickoff();
 
-var wait = 0;
-function benchmark() {
-	var go = function(id) {
-		setTimeout(function() {
-			product(id);
-		}, wait);
-		wait += waitBetweenVisits;
-	};
-
-	for(var i = 0; i < numberOfRuns; i++) {
-		go(i);
-	}
+var id = 0;
+var wait = 1000 / requestsPerSecond;
+function benchmark(remaining) {
+	setTimeout(function() {
+		product(id++);
+		benchmark(remaining--);
+	}, wait);
 }
 
+//var fs = require("fs");
 function product(id) {
 	crawl.visit(url("load/" + id), function(error, html, ms) {
-		//console.log(html);
 		report(ms);
 	});
 }

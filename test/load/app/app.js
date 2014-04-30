@@ -1,5 +1,6 @@
 steal("can", "./product.js", "can/route/pushstate", "can/view/stache", function(can, Product) {
 	var txt = "Online Shopping\n\n" +
+		"<div>Category: {{id}}</div>" +
 		"<ul>" +
 		"{{#each products}}" +
   	"<li>{{name}}: {{price}}</li>" +
@@ -14,11 +15,17 @@ steal("can", "./product.js", "can/route/pushstate", "can/view/stache", function(
 		if(attr === "id" && how !== "remove") {
 			crawlify.stop();
 			Product.findAll({}).then(function(products) {
-				state.attr("products", products);
+				state.attr({
+					id: +newVal,
+					products: products
+				});
 				crawlify.start();
 			});
 		} else if(attr === "id" && how === "remove") {
-			state.attr("products", []);
+			state.attr({
+				id: null,
+				products: []
+			});
 		}
 	});
 
@@ -30,4 +37,7 @@ steal("can", "./product.js", "can/route/pushstate", "can/view/stache", function(
 	$("#app").html(frag);
 
 	can.route.ready();
+
+	crawlify.stop();
+	crawlify.start();
 });
