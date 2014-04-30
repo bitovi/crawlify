@@ -52,13 +52,16 @@
 
 	/**
 	 * @method fin
-	 * Singles to the server-side crawlify that this render loop is complete.
+	 * Signals to the server-side crawlify that this render loop is complete.
 	 */
 	Crawlify.prototype.fin = function() {
-		this.complete = true;
-		if(typeof window.callPhantom === "function") {
-			window.callPhantom();
-		}
+		// Do this later so that rendering has time to complete.
+		setTimeout(function() {
+			this.complete = true;
+			if(typeof window.callPhantom === "function") {
+				window.callPhantom();
+			}
+		}, 0);
 	};
 
 	// Register Crawlify as a global
