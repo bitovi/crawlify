@@ -14,7 +14,7 @@
     "phantomjs",
     "crawl"
   ],
-	files: [
+	"files": [
 		"lib",
 		"crawlify.js"
 	],
