@@ -1,7 +1,7 @@
 {
   "name": "crawlify",
   "main": "crawlify.js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "homepage": "https://github.com/bitovi/crawlify",
   "authors": [
     "Bitovi"
