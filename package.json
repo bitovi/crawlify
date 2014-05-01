@@ -8,13 +8,16 @@
   },
   "scripts": {
     "benchmark": "node test/load/server.js",
-    "install": "bower install",
     "test": "mocha -R spec test/test.js"
   },
   "keywords": [
     "phantomjs",
     "crawl"
   ],
+	files: [
+		"lib",
+		"crawlify.js"
+	],
   "author": "Bitovi",
   "license": "MIT",
   "dependencies": {
