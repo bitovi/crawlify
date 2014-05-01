@@ -1,6 +1,6 @@
 # crawlify
 
-Crawlify uses a pool of ([zombie](http://zombie.labnotes.org/)) browsers to create a static copy of your single-page application. Rather than waiting an arbitrary amount of time, crawlify includes a client-side component that you use within your own code.
+Crawlify uses a pool of [PhantomJS](http://phantomjs.org/) browsers to create a static copy of your single-page application. Rather than waiting an arbitrary amount of time, crawlify includes a client-side component that you use within your own code. This makes crawling blazing fast.
 
 # Installation
 
@@ -14,10 +14,10 @@ bower install crawlify
 
 # Example
 
-First include `crawlify.js` in your webpage. This will place a `crawlify` object on `indow` that you can call start and stop on.
+First include `crawlify.js` or `crawlify.min.js` in your webpage. This will place a `crawlify` object on `window` that you can call start and stop on.
 
 ```html
-<script src="crawlify.js"></script>
+<script src="crawlify.min.js"></script>
 ```
 
 ## Client
@@ -40,7 +40,10 @@ Here we're going to cache the page so that the server can reply instantly
 
 ```javascript
 var Crawlify = require("crawlify");
-var crawl = new Crawlify();
+var crawl = new Crawlify({
+	workers: 4 // Defaults to 1,
+	reset: '/'
+});
 
 var cache = {};
 
@@ -60,5 +63,6 @@ crawl.visit("/todos", function(error, html) {
 
 1) Clone the repo
 2) `npm install`
-3) Make sure you have [mocha](http://visionmedia.github.io/mocha/) installed
-4) `npm test`
+3) `bower install`
+4) Make sure you have [mocha](http://visionmedia.github.io/mocha/) installed
+5) `npm test`
