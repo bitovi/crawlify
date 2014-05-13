@@ -21,7 +21,7 @@
     "tests"
   ],
   "devDependencies": {
-    "canjs": "2.0.7",
+    "canjs": "2.1.0",
     "jquery": "~2.0.0"
   }
 }

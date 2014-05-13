@@ -1,8 +1,8 @@
 // Options
 
-var numberOfWorkers = 8;
+var numberOfWorkers = 1;
 var numberOfRuns = 1000;
-var requestsPerSecond = 78.6;
+var requestsPerSecond = 17.5;
 
 var baseUrl = "http://0.0.0.0:8777/";
 function url(path) {
