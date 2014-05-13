@@ -50,12 +50,30 @@
 		});
 	};
 
-	Crawlify.prototype.fin = function() {
-		this.complete = true;
-		if(typeof window.callPhantom === "function") {
-			window.callPhantom();
-		}
+	/**
+	 * @method load
+	 * Load a given url
+	 * @param {String} url The url to load
+	 */
+	Crawlify.prototype.load = function(url) {
+		this.counter = 0;
+		history.pushState(null, null, url);
 	};
+
+	/**
+	 * @method fin
+	 * Finish the crawl and do cleanup stuff
+	 */
+	Crawlify.prototype.fin = typeof window.callPhantom === "function"
+		? function() {
+			this.complete = true;
+			window.callPhantom(this.counter);
+
+			// Generate the reset page
+			if(this.reset) {
+				this.load(this.reset);
+			}
+		} : function(){};
 
 	// Register Crawlify as a global
 	var crawlify = new Crawlify();
