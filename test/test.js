@@ -39,6 +39,28 @@ describe("Visiting a page", function(done) {
 	});
 });
 
+describe("Visiting the same page twice", function(){
+
+	it("Will visit that page the first time and then return the same content afterwards", function(done){
+		var crawl = new Crawlify();
+		var page = "file://" + __dirname + "/page.html";
+
+		// Visit the page the first time.
+		crawl.visit(page, function(firstErr, firstHtml){
+			crawl.visit(page, function(secondErr, secondHtml){
+				assert.equal(firstErr, null, "The first error is null");
+				assert.equal(secondErr, null, "The second error is null");
+
+				assert.ok(secondHtml.length, "We got html the second time round.");
+				assert.equal(firstHtml, secondHtml, "The two htmls are the same.");
+				
+				done();
+			});
+		});
+	});
+
+});
+
 describe("Visiting multiple pages without reloading", function() {
 	var crawl = new Crawlify();
 	var errors = [];
