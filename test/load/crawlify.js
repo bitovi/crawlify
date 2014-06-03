@@ -60,11 +60,13 @@
 		history.pushState(null, null, url);
 	};
 
+	var isCrawling = typeof window.callPhantom === "function";
+
 	/**
 	 * @method fin
 	 * Finish the crawl and do cleanup stuff
 	 */
-	Crawlify.prototype.fin = typeof window.callPhantom === "function"
+	Crawlify.prototype.fin = isCrawling
 		? function() {
 			this.complete = true;
 			window.callPhantom(this.counter);
@@ -77,6 +79,7 @@
 
 	// Register Crawlify as a global
 	var crawlify = new Crawlify();
+	crawlify.isCrawling = isCrawling;
 
 	// If there is a global crawlify object, use it as the initial options.
 	if(global.crawlify) {
@@ -86,4 +89,4 @@
 	}
 	global.crawlify = crawlify;
 
-})(this);
+})(window || this);
