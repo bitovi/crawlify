@@ -10,12 +10,9 @@ describe("Visiting a page", function(done) {
 		crawl = new Crawlify();
 		var page = "file://" + __dirname + "/page.html";
 
-		crawl.visit(page, function(err, h) {
-			error = err;
+		crawl.visit(page).then(function(h) {
 			html = h;
-			done();
-		});
-
+		}, function(err) { error = err; }).then(done);
 	});
 
 	it("Loads the correct content", function() {
@@ -45,18 +42,17 @@ describe("Visiting the same page twice", function(){
 		var crawl = new Crawlify();
 		var page = "file://" + __dirname + "/page.html";
 
-		// Visit the page the first time.
-		crawl.visit(page, function(firstErr, firstHtml){
-			crawl.visit(page, function(secondErr, secondHtml){
-				assert.equal(firstErr, null, "The first error is null");
-				assert.equal(secondErr, null, "The second error is null");
+		var reject = function(error) {
+			assert.equal(error, null, "There was no error response.");
+		};
 
+		// Visit the page the first time.
+		crawl.visit(page).then(function(firstHtml) {
+			return crawl.visit(page).then(function(secondHtml) {
 				assert.ok(secondHtml.length, "We got html the second time round.");
 				assert.equal(firstHtml, secondHtml, "The two htmls are the same.");
-				
-				done();
 			});
-		});
+		}, reject).then(done);
 	});
 
 });
@@ -69,23 +65,22 @@ describe("Visiting multiple pages without reloading", function() {
 	before(function(done) {
 		// Go to the initial page
 		var page = "file://" + __dirname + "/page1.html";
-		crawl.visit(page, function(err, html) {
-			errors.push(err);
+		crawl.visit(page).then(function(html) {
 			htmls.push(html);
 
 			// Now go to the second page
-			crawl.visit("page2.html", function(err, html) {
-				errors.push(err);
+			return crawl.visit("page2.html").then(function(html) {
 				htmls.push(html);
-				done();
 			});
-		});
+		}).then(null, function(err) {
+			console.log(err);
+			errors.push(err);
+		}).then(done);
 	});
 
 	it("Changes content within the page", function() {
 		// There should be no errors.
-		assert.equal(errors[0], null, "The initial page load resulted in an error");
-		assert.equal(errors[1], null, "The second page load resulted in an error");
+		assert.equal(errors.length, 0, "There were no errors");
 
 		var $ = cheerio.load(htmls[0]);
 		var added = $("#app").html();

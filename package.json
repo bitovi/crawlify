@@ -21,6 +21,7 @@
   "author": "Bitovi",
   "license": "MIT",
   "dependencies": {
+    "es6-promise": "^1.0.0",
     "phantom": "^0.6.1"
   },
   "devDependencies": {

@@ -1,4 +1,13 @@
-(function(global) {
+
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define([], factory);
+    } else {
+        // Browser globals
+        root.crawlify = factory();
+    }
+}(this, function() {
 
 	/**
 	 * @constructor Crawlify
@@ -77,16 +86,18 @@
 			}
 		} : function(){};
 
-	// Register Crawlify as a global
+	// Register Crawlify
 	var crawlify = new Crawlify();
 	crawlify.isCrawling = isCrawling;
 
 	// If there is a global crawlify object, use it as the initial options.
-	if(global.crawlify) {
-		for(var p in global.crawlify) {
-			crawlify[p] = global.crawlify[p];
+	if(window.crawlify) {
+		for(var p in window.crawlify) {
+			crawlify[p] = window.crawlify[p];
 		}
 	}
-	global.crawlify = crawlify;
+	window.crawlify = crawlify;
 
-})(window || this);
+	return crawlify;
+}));
+
