@@ -96,7 +96,7 @@ describe("Visiting multiple pages without reloading", function() {
 
 describe("Cycling out workers", function() {
 
-	it.only("Should allow you to set a timeframe which workers are available",
+	it("Should allow you to set a timeframe which workers are available",
 					function(done) {
 		var crawl = new Crawlify({
 			expiration: 200 // Expire the worker after 500ms
