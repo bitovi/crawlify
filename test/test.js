@@ -93,3 +93,28 @@ describe("Visiting multiple pages without reloading", function() {
 		assert.equal(added, "<span>This is page 2</span>", "The second page load didn't render its content");
 	});
 });
+
+describe("Cycling out workers", function() {
+
+	it.only("Should allow you to set a timeframe which workers are available",
+					function(done) {
+		var crawl = new Crawlify({
+			expiration: 200 // Expire the worker after 500ms
+		});
+
+		// Draw a worker into the available worker queue
+		crawl.pool.newWorker().then(function(firstWorker) {
+			crawl.pool.available.push(firstWorker);
+
+			// Wait 500ms and there should be a new worker replacing the old
+			setTimeout(function() {
+				var currentWorker = crawl.pool.available[0];
+				assert.notEqual(firstWorker, currentWorker, "The first worker was " +
+												"replaced by a new one.");
+				done();
+			}, 201);
+		});
+		
+	});
+
+});
