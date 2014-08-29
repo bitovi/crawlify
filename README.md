@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bitovi/crawlify.svg?branch=master)](https://travis-ci.org/bitovi/crawlify)
+
 # crawlify
 
 Crawlify uses a pool of [PhantomJS](http://phantomjs.org/) browsers to create a static copy of your single-page application. Rather than waiting an arbitrary amount of time, crawlify includes a client-side component that you use within your own code. This makes crawling blazing fast.
