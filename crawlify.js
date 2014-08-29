@@ -92,32 +92,34 @@
 	window.crawlify = crawlify;
 
 	// Overload xhr
-	var oldXhr = window.XMLHttpRequest;
-	window.XMLHttpRequest = function() {
-		var xhr = new oldXhr();
-		xhr.addEventListener("load", function onload() {
-			xhr.removeEventListener("load", onload);
-			crawlify.start();
-		});
+	if(isCrawling) {
+		var oldXhr = window.XMLHttpRequest;
+		window.XMLHttpRequest = function() {
+			var xhr = new oldXhr();
+			xhr.addEventListener("load", function onload() {
+				xhr.removeEventListener("load", onload);
+				crawlify.start();
+			});
 
-		var oldSend = xhr.send;
-		xhr.send = function() {
-			crawlify.stop();
-			return oldSend.apply(this, arguments);
+			var oldSend = xhr.send;
+			xhr.send = function() {
+				crawlify.stop();
+				return oldSend.apply(this, arguments);
+			};
+
+			return xhr;
 		};
 
-		return xhr;
-	};
-
-	// Overload setTimeout
-	var oldSetTimeout = window.setTimeout;
-	window.setTimeout = function(fn, ms) {
-		crawlify.stop();
-		return oldSetTimeout(function() {
-			fn.apply(this, arguments);
-			crawlify.start();
-		}, ms);
-	};
+		// Overload setTimeout
+		var oldSetTimeout = window.setTimeout;
+		window.setTimeout = function(fn, ms) {
+			crawlify.stop();
+			return oldSetTimeout(function() {
+				fn.apply(this, arguments);
+				crawlify.start();
+			}, ms);
+		};
+	}
 
 	return crawlify;
 }));
