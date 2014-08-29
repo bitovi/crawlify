@@ -8,7 +8,7 @@
   },
   "scripts": {
     "benchmark": "node test/load/server.js",
-    "test": "mocha -R spec test/test.js"
+    "test": "node_modules/.bin/mocha -R spec test/test.js"
   },
   "keywords": [
     "phantomjs",
@@ -30,6 +30,7 @@
     "express": "^4.1.0",
     "gulp": "^3.6.2",
     "gulp-rename": "^1.2.0",
-    "gulp-uglify": "^0.2.1"
+    "gulp-uglify": "^0.2.1",
+    "mocha": "^1.21.4"
   }
 }
