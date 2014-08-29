@@ -118,3 +118,18 @@ describe("Cycling out workers", function() {
 	});
 
 });
+
+describe("Page load inference", function() {
+
+	it("Should know the page is finished loading by monitoring async activity", function(done) {
+		var crawl = new Crawlify();
+		var page = "file://" + __dirname + "/infer.html";
+		crawl.visit(page).then(function(html) {
+			var $ = cheerio.load(html);
+
+			//assert.equal($("#timeout").length, 1, "We waited for the setTimeout to complete.");
+			assert.equal($("#http").length, 1, "We waited for the http request to complete.");
+		}).then(done);
+	});
+
+});
