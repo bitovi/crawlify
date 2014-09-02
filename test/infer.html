@@ -1,0 +1,33 @@
+<html>
+<head>
+	<title>Crawlify test</title>
+</head>
+<body>
+	<div id="app"></div>
+	<div id="also"></div>
+
+	<script src="../crawlify.js"></script>
+	<script>
+		(function(){
+			var app = document.getElementById("app");
+
+			// Do some rendering later
+			setTimeout(function() {
+				var div = document.createElement("div");
+				div.innerHTML = "<strong id='timeout'>It worked!</strong>";
+				app.appendChild(div);
+			}, 50);
+
+			var req = new XMLHttpRequest();
+			req.open("GET", "http://baconipsum.com/api/?type=meat-and-filler");
+			req.onload = function() {
+				var div = document.createElement("div");
+				var result = JSON.parse(req.responseText);
+				div.innerHTML = "<span id='http'>" + result[0] + "</span>";
+				app.appendChild(div);
+			};
+			req.send();
+		})();
+	</script>
+</body>
+</html>
