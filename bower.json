@@ -18,7 +18,9 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+		"gulpfile.js",
+		"lib"
   ],
   "devDependencies": {
     "canjs": "2.1.0",
