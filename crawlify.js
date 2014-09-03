@@ -96,10 +96,14 @@
 		var oldXhr = window.XMLHttpRequest;
 		window.XMLHttpRequest = function() {
 			var xhr = new oldXhr();
-			xhr.addEventListener("load", function onload() {
-				xhr.removeEventListener("load", onload);
+
+			var handler = function() {
+				xhr.removeEventListener("load", handler);
+				xhr.removeEventListener("error", handler);
 				crawlify.start();
-			});
+			};
+			xhr.addEventListener("load", handler);
+			xhr.addEventListener("error", handler);
 
 			var oldSend = xhr.send;
 			xhr.send = function() {
@@ -114,10 +118,13 @@
 		var oldSetTimeout = window.setTimeout;
 		window.setTimeout = function(fn, ms) {
 			crawlify.stop();
-			return oldSetTimeout(function() {
-				fn.apply(this, arguments);
+
+			// Ensure that we call start event if the timeout is cancelled
+			oldSetTimeout(function() {
 				crawlify.start();
 			}, ms);
+
+			return oldSetTimeout.apply(this, arguments);
 		};
 	}
 
