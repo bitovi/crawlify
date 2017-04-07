@@ -66,5 +66,5 @@ crawl.visit("/todos", function(error, html) {
 1) Clone the repo
 2) `npm install`
 3) `bower install`
-4) Make sure you have [mocha](http://visionmedia.github.io/mocha/) installed
+4) Make sure you have [mocha](https://mochajs.org/) installed
 5) `npm test`
